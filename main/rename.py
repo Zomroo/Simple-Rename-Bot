@@ -1,9 +1,13 @@
-import time, os
-from pyrogram import Client, filters, enums
+import time
+import os
+from pyrogram import Client, filters
 from config import DOWNLOAD_LOCATION, CAPTION, ADMIN
 from main.utils import progress_message, humanbytes
 
-@Client.on_message(filters.private & filters.command("rename") & filters.user(ADMIN))             
+# Define the specific group chat ID where the command should work
+SPECIFIC_GROUP_ID = -1001678209303
+
+@Client.on_message(filters.group & filters.command("rename") & filters.chat(SPECIFIC_GROUP_ID) & filters.user(ADMIN))
 async def rename_file(bot, msg):
     reply = msg.reply_to_message
     if len(msg.command) < 2 or not reply:
